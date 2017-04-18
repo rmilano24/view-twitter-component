@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <title> </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/vue"></script>
+  <body>
+
+    <div class="w-75 center ba b--black-10" id="twitterVue">
+      <div class="pv2 tc bb b--black-10">
+        <h1 class="ma0 f5 normal">Compose New Tweet</h1>
+      </div>
+      <div class="bg-near-white pa3">
+        <textarea v-model="tweet" name="tweet" rows="3" class="w-100 br2 ba b--black-10 pa2" placeholder="Write your tweet here"></textarea>
+        <div class="mt3 tr">
+          <span
+  v-bind:class="{ 'dark-red': underTwentyMark, 'light-red': underTenMark }">
+  {{ charactersRemaining }}
+</span>
+  <button :disabled="tweetIsOutOfRange" class="button-reset bg-blue bn white f6 fw5 pv2 ph3 br2 dim">Tweet</button>
+        </div>
+      </div>
+
+      <p>The value of <strong>tweet </strong>is: {{tweet}} </p>
+  <p>The value of <strong>tweetIsEmpty</strong>is: {{ tweetIsEmpty}}</p>
+    </div>
+
+
+
+    <script>
+
+    const MAX_TWEET_LENGTH = 140;
+
+        new Vue({
+      el: '#twitterVue',
+      data: {
+        tweet: ''
+      },
+      computed: {
+        tweetIsOutOfRange: function() {
+          return this.charactersRemaining == MAX_TWEET_LENGTH
+                 || this.charactersRemaining < 0;
+        },
+        charactersRemaining: function() {
+          return MAX_TWEET_LENGTH - this.tweet.length;
+        },
+        underTwentyMark: function() {
+          return this.charactersRemaining <= 20 && this.charactersRemaining > 10;
+        },
+        underTenMark: function() {
+          return this.charactersRemaining <= 10;
+        }
+      }
+    });
+
+    </script>
+
+  </body>
+</html>
